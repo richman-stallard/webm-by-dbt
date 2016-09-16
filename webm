@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# webm-by-dbt v1.0
+
+# get user input && calculate secondary params
+echo "output file name"
+read output
+echo "start time (hh:mm:ss.t)"
+read start
+echo "duration (seconds[.decimals])"
+read duration
+echo "y-resolution {720, 540, 360}"
+read v_res
+if [ "$v_res" = "720" ]; then
+    h_res="1280"
+elif [ "$v_res" = "540" ]; then
+    h_res="960"
+elif [ "$v_res" = "360" ]; then
+    h_res="640"
+else
+    echo "invalid resolution"
+    exit
+fi
+echo "audio? [y|N]"
+read audio
+if [ "$audio" = "y" ]; then
+    audiocmd="-c:a libvorbis -b:a 192K -vbr on"
+    maxsize=3800
+else
+    audio="N"
+    audiocmd="-an"
+    maxsize=3000
+fi
+bitrate=$(echo "(8*$maxsize/$duration)" | bc)
+
+# write user params into stdout and logfile
+echo "converting $1:" | tee -a ./webm_log.txt
+echo "-----------------------" | tee -a ./webm_log.txt
+echo "start:       $start" | tee -a ./webm_log.txt
+echo "duration:    $duration s" | tee -a ./webm_log.txt
+echo "max bitrate: $bitrate kbps" | tee -a ./webm_log.txt
+echo "output file: ./webm/$output.webm" | tee -a ./webm_log.txt
+echo "resolution:  $h_res x $v_res" | tee -a ./webm_log.txt
+echo "audio:       $audiocmd" | tee -a ./webm_log.txt
+echo "" | tee -a ./webm_log.txt
+echo "Press [Enter] to start converting!"
+read confirm
+
+# first pass
+echo "ffmpeg -hide_banner -loglevel \"info\" -y -ss \"$start\" -t \"$duration\" -i \"$1\" -c:v libvpx -pass 1 -qmin 0 -qmax 50 -crf 10 -b:v 1M -threads 3 -speed 4 -g 128 -an -sn -f webm \"/dev/null\""
+ffmpeg -hide_banner -loglevel "info" -y -ss "$start" -t "$duration" -i "$1" -c:v libvpx -pass 1 -qmin 0 -qmax 50 -crf 10 -b:v 1M -threads 3 -speed 4 -g 128 -an -sn -f webm "/dev/null"
+
+# second pass
+mkdir "./webm"
+echo "ffmpeg -hide_banner -loglevel \"info\" -ss \"$start\" -t \"$duration\" -i \"$1\" -c:v libvpx -pass 2 -qmin 0 -qmax 50 -crf 10 -b:v \"$bitrate\" -s \"$h_res:$v_res\" $audiocmd -threads 3 -speed 0 -auto-alt-ref 1 -lag-in-frames 25 -g 128 -sn -f webm \"./webm/$output.webm\""
+ffmpeg -hide_banner -loglevel "info" -ss "$start" -t "$duration" -i "$1" -c:v libvpx -pass 2 -qmin 0 -qmax 50 -crf 10 -b:v "$bitrate"k -s "$h_res:$v_res" $audiocmd -threads 3 -speed 0 -auto-alt-ref 1 -lag-in-frames 25 -g 128 -sn -f webm "./webm/$output.webm"
+
+# cleanup
+rm ffmpeg2pass-0.log
