@@ -4,9 +4,19 @@
 
 Requires ffmpeg compiled with --enable-libvpx --enable-libvorbis and possibly --enable-gpl.
 
-Copy webm to any directory in your PATH, make it executable.
-$ webm <source file>
-to get started. Will create a subfolder ./webm with your webms and a text file ./webm_log.txt which contains the supplied parameters for all the webms you made in this working directory.
+Make file "webm" executable with
+
+$ chmod +x ./webm
+
+, copy or move it to a directory in your PATH, e.g.
+
+$ sudo cp ./webm /usr/local/bin/
+
+, then start converting by calling
+
+$ webm "/path/to/source.file"
+
+Will create a subfolder ./webm with your webms and a text file ./webm_log.txt which contains the supplied parameters for all the webms you made in this working directory.
 See bash-example.txt for example session.
 
 Resolution can be chosen out of three options (1280x720, 960x540 and 640x360) because it depends on source file frame rate.
