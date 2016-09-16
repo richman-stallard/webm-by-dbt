@@ -1,4 +1,4 @@
-# Example terminal session, assuming this file and the video source are stored in ~/Videos:
+# example terminal session
 
 kkb@xubuntu:~$ cd Videos && ll
 total 1770580
@@ -10,7 +10,7 @@ drwxrwxr-x  3 kkb kkb      28672 Sep 16 19:21 webm/
 -rw-rw-r--  1 kkb kkb      64366 Sep 10 22:26 webm.png
 -rw-rw-r--  1 kkb kkb       3612 Sep 16 18:31 webm.sh
 -rw-------  1 kkb kkb      11284 Sep 15 23:29 webm.txt
-kkb@xubuntu:~/Videos$ bash ./webm.sh "Steel Panther - Live from Lexxi’s Mom’s Garage DVD (Full Concert)-FXXcvntSlmY.mkv" 
+kkb@xubuntu:~/Videos$ webm "Steel Panther - Live from Lexxi’s Mom’s Garage DVD (Full Concert)-FXXcvntSlmY.mkv" 
 output file name
 steel_panther
 start time (hh:mm:ss.t)
