@@ -2,15 +2,19 @@
 
 # webm-by-dbt v1.0
 
-# get user input && calculate secondary params
-echo "output file name"
-read output
+# get user input
 echo "start time (hh:mm:ss.t)"
 read start
 echo "duration (seconds[.decimals])"
 read duration
 echo "y-resolution {720, 540, 360}"
 read v_res
+echo "audio? [y|N]"
+read audio
+echo "output file name"
+read output
+
+# calculate secondary params
 if [ "$v_res" = "720" ]; then
     h_res="1280"
 elif [ "$v_res" = "540" ]; then
@@ -21,8 +25,6 @@ else
     echo "invalid resolution"
     exit
 fi
-echo "audio? [y|N]"
-read audio
 if [ "$audio" = "y" ]; then
     audiocmd="-c:a libvorbis -b:a 192K -vbr on"
     maxsize=3800
