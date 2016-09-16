@@ -2,6 +2,8 @@
 
 /dbt/'s super awesome webm conversion script for bash
 
+Requires ffmpeg compiled with --enable-libvpx --enable-libvorbis and possibly --enable-gpl.
+
 Copy webm to any directory in your PATH, make it executable.
 $ webm <source file>
 to get started. Will create a subfolder ./webm with your webms and a text file ./webm_log.txt which contains the supplied parameters for all the webms you made in this working directory.
