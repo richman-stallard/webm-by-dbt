@@ -1,0 +1,43 @@
+# Example terminal session, assuming this file and the video source are stored in ~/Videos:
+
+kkb@xubuntu:~$ cd Videos && ll
+total 1770580
+drwxr-xr-x  3 kkb kkb       4096 Sep 16 19:21 ./
+drwx------ 33 kkb kkb      12288 Sep 16 18:33 ../
+-rw-rw-r--  1 kkb kkb 1148006607 Aug  5  2015 Steel Panther 2015 08 03 West Hollywood, CA, USA   House of Blues Webcast 720p-GNNedc13ENs.webm
+-rw-rw-r--  1 kkb kkb  664883790 Jun 12 23:34 Steel Panther - Live from Lexxi’s Mom’s Garage DVD (Full Concert)-FXXcvntSlmY.mkv
+drwxrwxr-x  3 kkb kkb      28672 Sep 16 19:21 webm/
+-rw-rw-r--  1 kkb kkb      64366 Sep 10 22:26 webm.png
+-rw-rw-r--  1 kkb kkb       3612 Sep 16 18:31 webm.sh
+-rw-------  1 kkb kkb      11284 Sep 15 23:29 webm.txt
+kkb@xubuntu:~/Videos$ bash ./webm.sh "Steel Panther - Live from Lexxi’s Mom’s Garage DVD (Full Concert)-FXXcvntSlmY.mkv" 
+output file name
+steel_panther
+start time (hh:mm:ss.t)
+00:10:10
+duration (seconds[.decimals])
+10
+y-resolution {720, 540, 360}
+720
+audio? [y|N]
+y
+
+converting Steel Panther - Live from Lexxi’s Mom’s Garage DVD (Full Concert)-FXXcvntSlmY.mkv:
+-----------------------
+start:       00:10:10
+duration:    10 s
+ax bitrate: 3040 kbps
+output file: ./webm/steel_panther.webm
+mesolution:  1280 x 720
+audio:       -c:a libvorbis -b:a 192K -vbr on
+
+Press [Enter] to start converting!
+
+ffmpeg -hide_banner -loglevel "info" -y -ss "00:10:10" -t "10" -i "Steel Panther - Live from Lexxi’s Mom’s Garage DVD (Full Concert)-FXXcvntSlmY.mkv" -c:v libvpx -pass 1 -qmin 0 -qmax 50 -crf 10 -b:v 1M -threads 3 -speed 4 -g 128 -an -sn -f webm "/dev/null"
+ <ffmpeg output>
+mkdir: cannot create directory ‘./webm’: File exists
+ffmpeg -hide_banner -loglevel "info" -ss "00:10:10" -t "10" -i "Steel Panther - Live from Lexxi’s Mom’s Garage DVD (Full Concert)-FXXcvntSlmY.mkv" -c:v libvpx -pass 2 -qmin 0 -qmax 50 -crf 10 -b:v "3040" -s "1280:720" -c:a libvorbis -b:a 192K -vbr on -threads 3 -speed 0 -auto-alt-ref 1 -lag-in-frames 25 -g 128 -sn -f webm "./webm/steel_panther.webm"
+ <ffmpeg output>
+kkb@xubuntu:~/Videos$ mpv ./webm/steel_panther.webm
+ <mpv output>
+kkb@xubuntu:~/Videos$ exit
