@@ -22,7 +22,7 @@ $ webm "/path/to/source.file"
 # output
 
 Will create a subfolder of the current working directory ./webm with your webms and a text file *.log (replace * with name of input video file) which contains the supplied parameters for all the webms you made in this working directory based on that file.
-See bash-example.txt for example session and Steel Panther - Live from Lexxi’s Mom’s Garage DVD (Full Concert)-FXXcvntSlmY.mkv.log for the sample logfile created in that session.
+See "bash-example.txt" for example session and "Steel Panther - Live from Lexxi’s Mom’s Garage DVD (Full Concert)-FXXcvntSlmY.mkv.log" for the sample logfile created in that session.
 
 # resolution
 
