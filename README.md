@@ -17,7 +17,7 @@ $ sudo cp ./webm /usr/local/bin/
 $ webm "/path/to/source.file"
 
 Will create a subfolder of the current working directory ./webm with your webms and a text file *.log (replace * with name of input video file) which contains the supplied parameters for all the webms you made in this working directory based on that file.
-See bash-example.txt for example session.
+See bash-example.txt for example session and Steel Panther - Live from Lexxi’s Mom’s Garage DVD (Full Concert)-FXXcvntSlmY.mkv.log for the sample logfile created in that session.
 
 Resolution can be chosen out of three options (1280x720, 960x540 and 640x360) because it depends on source file frame rate.
 File size limits were chosen with some safety margin in mind; you can edit them if you want however (maxsize).
