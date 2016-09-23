@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# webm-by-dbt v1.1
+# webm-by-dbt v1.3
 
 # extract file name from input file path
 infile=$(basename "$1")
@@ -36,7 +36,7 @@ while [ -z "$cont" ]; do
         exit
     fi
     if [ "$audio" = "y" ]; then
-        audiocmd="-c:a libvorbis -b:a 192K -vbr on"
+        audiocmd="-c:a libvorbis -b:a 192K -vbr on -ac 2"
         maxsize=3800
     else
         audio="N"
