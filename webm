@@ -61,8 +61,8 @@ while [ -z "$cont" ]; do
     ffmpeg -y -ss "$start" -t "$duration" -i "$1" -c:v libvpx -pass 1 -qmin 0 -qmax 50 -crf 10 -b:v 1M -threads 3 -speed 4 -an -f webm "/dev/null"
 
     # second pass
-    echo "ffmpeg -ss \"$start\" -t \"$duration\" -i \"$1\" -c:v libvpx -pass 2 -qmin 0 -qmax 50 -crf 10 -b:v \"$bitrate\" -s \"$h_res:$v_res\" $audiocmd -threads 3 -f webm -metadata title=\"$infile start $start length $duration\" \"./webm/$output.webm\""
-    ffmpeg -ss "$start" -t "$duration" -i "$1" -c:v libvpx -pass 2 -qmin 0 -qmax 50 -crf 10 -b:v "$bitrate"k -s "$h_res:$v_res" $audiocmd -threads 3 -f webm -metadata title="$infile start $start length $duration" "./webm/$output.webm"
+    echo "ffmpeg -ss \"$start\" -t \"$duration\" -i \"$1\" -c:v libvpx -pass 2 -qmin 0 -qmax 50 -crf 10 -b:v \"$bitrate\" -s \"$h_res:$v_res\" $audiocmd -threads 3 -speed 0 -f webm -metadata title=\"$infile start $start length $duration\" \"./webm/$output.webm\""
+    ffmpeg -ss "$start" -t "$duration" -i "$1" -c:v libvpx -pass 2 -qmin 0 -qmax 50 -crf 10 -b:v "$bitrate"k -s "$h_res:$v_res" $audiocmd -threads 3 -speed 0 -f webm -metadata title="$infile start $start length $duration" "./webm/$output.webm"
 
     # cleanup
     rm ffmpeg2pass-0.log
