@@ -37,4 +37,4 @@ Rule of thumb for 30 fps video:
 - up to 30 seconds -> 540p
 - over 30 seconds -> 360p
 
-After conversion you can hit [Enter] to make another webm, or enter anything and hit [Enter] to exit.
+After conversion script asks for input for next clip; exit with escape sequence (ctrl+c).
