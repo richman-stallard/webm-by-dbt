@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# webm-by-dbt v1.5
+# webm-by-dbt v1.5.1
 
 # extract file name from input file path
 infile=$(basename "$1")
@@ -67,10 +67,7 @@ while [ -z "$cont" ]; do
     # cleanup
     rm ffmpeg2pass-0.log
     
-    # make another webm?
-    echo "Press [Enter] to make another webm from this file,"
-    echo "enter anything and press [Enter] to quit!"
-    read cont
+    echo ""
 done
 echo "" | tee -a "./webm/$infile.log"
 echo "Exiting."
