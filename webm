@@ -26,11 +26,13 @@ while [ -z "$cont" ]; do
 
     # calculate secondary params
     if [ "$v_res" = "720" ]; then
-        h_res="1280"
+        rescmd="-s 1280:720"
     elif [ "$v_res" = "540" ]; then
-        h_res="960"
+        rescmd="-s 960:540"
     elif [ "$v_res" = "360" ]; then
-        h_res="640"
+        rescmd="-s 640:360"
+    elif [ "$vres" = "" ]; then
+        rescmd=""
     else
         echo "invalid resolution"
         exit
@@ -61,8 +63,8 @@ while [ -z "$cont" ]; do
     ffmpeg -y -ss "$start" -t "$duration" -i "$1" -c:v libvpx -pass 1 -qmin 0 -qmax 50 -crf 10 -b:v 1M -threads 3 -speed 4 -an -f webm "/dev/null"
 
     # second pass
-    echo "ffmpeg -ss \"$start\" -t \"$duration\" -i \"$1\" -c:v libvpx -pass 2 -qmin 0 -qmax 50 -crf 10 -b:v \"$bitrate\" -s \"$h_res:$v_res\" $audiocmd -threads 3 -speed 0 -f webm -metadata title=\"$infile start $start length $duration\" \"./webm/$output.webm\""
-    ffmpeg -ss "$start" -t "$duration" -i "$1" -c:v libvpx -pass 2 -qmin 0 -qmax 50 -crf 10 -b:v "$bitrate"k -s "$h_res:$v_res" $audiocmd -threads 3 -speed 0 -f webm -metadata title="$infile start $start length $duration" "./webm/$output.webm"
+    echo "ffmpeg -ss \"$start\" -t \"$duration\" -i \"$1\" -c:v libvpx -pass 2 -qmin 0 -qmax 50 -crf 10 -b:v \"$bitrate\" $rescmd \"$audiocmd\" -threads 3 -speed 0 -f webm -metadata title=\"$infile start $start length $duration\" \"./webm/$output.webm\""
+    ffmpeg -ss "$start" -t "$duration" -i "$1" -c:v libvpx -pass 2 -qmin 0 -qmax 50 -crf 10 -b:v "$bitrate"k $rescmd "$audiocmd" -threads 3 -speed 0 -f webm -metadata title="$infile start $start length $duration" "./webm/$output.webm"
 
     # cleanup
     rm ffmpeg2pass-0.log
