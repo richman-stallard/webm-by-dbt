@@ -17,7 +17,7 @@ do
     read start
     echo "duration (seconds[.decimals])"
     read duration
-    echo "y-resolution {720, 540, 360}"
+    echo "y-resolution {720, 540, 360; original if empty}"
     read v_res
     echo "audio? [y|N]"
     read audio
@@ -25,19 +25,24 @@ do
     read output
 
     # calculate secondary params
-    if [ "$v_res" = "720" ]; then
+    if [[ "$v_res" = "720" ]]
+    then
         rescmd="-s 1280:720"
-    elif [ "$v_res" = "540" ]; then
+    elif [[ "$v_res" = "540" ]]
+    then
         rescmd="-s 960:540"
-    elif [ "$v_res" = "360" ]; then
+    elif [[ "$v_res" = "360" ]]
+    then
         rescmd="-s 640:360"
-    elif [ "$vres" = "" ]; then
+    elif [[ "$vres" = "" ]]
+    then
         rescmd=""
     else
         echo "invalid resolution"
         exit
     fi
-    if [ "$audio" = "y" ]; then
+    if [[ "$audio" = "y" ]]
+    then
         audiocmd="-c:a libvorbis -b:a 192K -vbr on -ac 2"
         maxsize=3800
     else
@@ -53,7 +58,7 @@ do
     echo "duration:    $duration s" | tee -a "./webm/$infile.log"
     echo "max bitrate: $bitrate kbps" | tee -a "./webm/$infile.log"
     echo "output file: ./webm/$output.webm" | tee -a "./webm/$infile.log"
-    echo "resolution:  $h_res x $v_res" | tee -a "./webm/$infile.log"
+    echo "resolution:  $rescmd" | tee -a "./webm/$infile.log"
     echo "audio:       $audiocmd" | tee -a "./webm/$infile.log"
     echo "Press [Enter] to start converting!"
     read confirm
